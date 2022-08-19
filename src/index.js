@@ -25,6 +25,7 @@ function fetchCountries(name) {
       } else if (data.length === 1) {
         console.log('country-info');
       } else {
+        countryList(data);
         console.log('country-list');
       }
       console.log(data.length);
@@ -45,3 +46,21 @@ input.addEventListener(
     }
   }, DEBOUNCE_DELAY)
 );
+
+function countryList(data) {
+  list.innerHTML = '';
+  info.innerHTML = '';
+  const countries = data
+    .map(
+      ({
+        name: { official },
+        flags: { svg },
+      }) => `<li style = "list-style:none; font-size:24px;">
+      <img src="${svg}" width="50" alt="${official}"/>
+  ${official}
+  </li>`
+    )
+    .join('');
+  list.insertAdjacentHTML('afterbegin', countries);
+  console.log(countries);
+}
